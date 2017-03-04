@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Jeff</title>
+
+    <link href="css/stylesheet.css" rel="stylesheet" />
+</head>
+
+<body>
+    <canvas id="bg-canvas" width="768" height="600"></canvas>
+    <canvas id="fg-canvas" width="768" height="600"></canvas>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/movement.js"></script>
+    <script src="js/game.js"></script>
+    <div id="counter-container">
+      <div id="my-counter"></div>
+      <script>
+      i = 60;
+      function onTimer() {
+        document.getElementById('my-counter').innerHTML = i;
+        i--;
+        if (i < 0) {
+          if (window.confirm('Click ok to play again!'))
+            {
+            window.location.href='file:///Users/willbetts/desktop/jeff/index.html';
+            };
+        }
+        else {
+          setTimeout(onTimer, 1000);
+        }
+      }
+
+      onTimer();
+      </script>
+      <div id="start-over-link-container">
+        <a href="file:///Users/willbetts/desktop/jeff/index.html"> start over</a>
+      </div>
+    </div>
+    </body>
+
+</html>
