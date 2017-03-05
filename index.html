@@ -29,10 +29,11 @@
         document.getElementById('my-counter').innerHTML = i;
         i--;
         if (i < 0) {
-          if (window.confirm('Click ok to play again!'))
-            {
-            window.location.href='file:///Users/willbetts/desktop/jeff/index.html';
-            };
+              modal = document.createElement('div');
+              modal.id = "modal";
+              modal.innerHTML = "<a class='link' href=> Game over. Click to play again</a>"
+              document.getElementById('fg-canvas').replaceWith(modal);
+
         }
         else {
           setTimeout(onTimer, 1000);
@@ -41,10 +42,14 @@
 
       onTimer();
       </script>
+      <div class="alert">
+
+      </div>
+
       <div id="start-over-link-container">
-        <a href="file:///Users/willbetts/desktop/jeff/index.html"> start over</a>
+        <a href="" class='link'> start over</a>
       </div>
     </div>
-    </body>
+  </body>
 
 </html>

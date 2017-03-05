@@ -40,7 +40,7 @@ const Entities = {
       };
 
       generateRandomCoin = function() {
-        setInterval(randomCoinLocation, 5000);
+        setInterval(randomCoinLocation, 200);
       };
 
       wallLocations.forEach(function (location) {

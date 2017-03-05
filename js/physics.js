@@ -70,7 +70,7 @@ let Physics = {
         }
 
         if (jeff.x > entity.x && jeff.y > entity.y) {
-          jeff.x = entity.x + entity.w;
+          jeff.x = entity.x - entity.w + jeff.w;
         }
     }
 
