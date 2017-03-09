@@ -47,7 +47,7 @@ const Entities = {
         data.entities.wallsArray.push( new Entities.helpers.Wall(location[0], location[1], location[2], location[3]));
       });
 
-      data.entities.generateRandomCoin = generateRandomCoin();
+      data.entities.generateRandomCoin = setTimeout(generateRandomCoin, 10000);
   },
 
   helpers: {

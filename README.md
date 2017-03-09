@@ -1,77 +1,110 @@
-###Super Jeff
+## Super Jeff
 
+[play Super Jeff](http://willbetts.tech/Super-Jeff/)
 
-Background
+### Storyline
 
-Super Jeff is a game that's very similar to super mario.  The original super mario
-is a one player game that is played in a side scrolling format.  The user will be
-able to control Jeff and walk through the game.  As Jeff moves, he will encounter
-several types of obstacles.  He will have to jump over stuff and squash monsters.
-The longer Jeff stays alive, the higher your score.  
+Jeff is a descendent of Mario and is stuck in a NYC sewer where coins are appearing randomly.  
+Jeff is doing what he can to pass the time before he finds a way out.  
 
-###Functionality & MVP
+Super Jeff is a game inspired by super mario.  It was developed using JavaScript and uses
+DOM manipulation and HTML5 Canvas for smooth 2D rendering.  
 
-While playing Super Jeff, users will be able to:
- - [ ] move side to side, jump
- - [ ] die if hit by one of the monsters
- - [ ] destroy monsters by jumping on them
+![main](assets/images/jeff_screen.png)
 
-In addition, this project will include:
+### How To Play
 
-- [ ] An About modal describing the background and rules of the game.  
-- [ ] A production README
+Try to collect as many coins before time runs out.  Use the arrow keys to move around and jump.  Help Jeff get Rich!
 
-### Wireframes
+#### Rendering & Sprites
+Rendering is done using HTML 5 Canvas. By covering sprite images over Canvas elements, I was able to use simple math to detect collisions.
 
-This app will consist of a single screen where Jeff will be able to walk around.  
-Game controls will be left, right and jump.
+```javascript
+drawEntity: function (entity, ctx) {
+  ctx.drawImage(entity.sprite.img,
+                entity.sprite.srcX, entity.sprite.srcY,
+                entity.sprite.srcW, entity.sprite.srcH,
+                entity.x, entity.y,
+                entity.w, entity.h);
+}
+```
 
-This project will be implemented with the following technologies:
-- Vanilla JavaScript
-- 'HTML5 Canvas' and 'Easel.js' for DOM manipulation and rendering
-- Webpack to bundle and serve up the various scripts.  
+### State Machine
 
-In addition to the webpack entry file, there will be three scripts involved in this project:
+A state machine was implemented that accounts for the logic of which direction Jeff is facing, walking, or jumping.
 
-'scene.js': this script will handle the logic for creating and updating the necessary  
-'Easel.js' elements and rendering them to the DOM.
+```javascript
+this.states = {
+  jumping: {
+    movement: function (data) {
+      if (self.velY === 0) {
+        const jumpSound = self.jumpSound.cloneNode();
+        jumpSound.play();
+        self.velY -= 23;
+      }
+    },
 
-'background.js': this script will handle the logic behind the scenes.  It will handle how
-frequently a monster appears on the screen.   
+    animation: function (data) {
+      if (self.direction === "right"){
+          self.sprite = self.spriteAnimations.jumpRight;
+      } else {
+        self.sprite = self.spriteAnimations.jumpLeft;
+      }
+    }
+  },
+  walking: {
+    movement: function (data) {
+      if (self.direction === "right") {
+          self.x += self.velX;
+      } else {
+        self.x -= self.velX;
+      }
+    },
 
-'monster.js':  this script will handle the physical makeup of the monsters that Jeff is going
-to have to kill.
+    animation: function (data) {
+      if (self.direction === "right") {
+        if (data.animationFrame % 5 === 0) {
+            self.sprite = self.spriteAnimations.walkRight.frames[self.spriteAnimations.walkRight.currentFrame];
+            self.spriteAnimations.walkRight.currentFrame++;
 
-'jeff.js': this script will handle the makeup of Jeff as well as the event listeners available
-to the user to move him around.   
+            if (self.spriteAnimations.walkRight.currentFrame > 2) {
+                self.spriteAnimations.walkRight.currentFrame = 0;
+              }
+        }
+      } else {
+        if (data.animationFrame % 5 === 0) {
+            self.sprite = self.spriteAnimations.walkLeft.frames[self.spriteAnimations.walkLeft.currentFrame];
+            self.spriteAnimations.walkLeft.currentFrame++;
 
-###Implementation Timeline
+            if (self.spriteAnimations.walkLeft.currentFrame > 2) {
+                self.spriteAnimations.walkLeft.currentFrame = 0;
+              }
+        }
+      }
+    }
+  },
+  standing: {
+    movement: function (data) {
+      return;
+    },
 
-**Day 1**: Setup all necessary Node modules, including getting webpack up and running and
-'Easel.js' installed.  Create 'webpack.config.js' as well as 'package.json'.  Write a basic
-entry file and the bare bones of all 3 scripts outlines above.  Learn the basics of 'Easel.js'.  
-Goals for the day:
-
-- Get a green bundle with 'webpack'
-- Learn enough 'Easel.js' to render an object to the 'Canvas element'
-
-**Day 2**: Dedicate this day to learning the 'Easel.js' API.  First, build out the
-'Jeff' object to be connected to the 'scene' object.  Then use the 'scene.js' to render
-the background.  Goals for the day:
-
--Get Jeff to appear on the scene
-
-**Day 3**  Build out functions that handle the rendering of obstacles and monsters.  
-Incorporate the logic into the scene.  Goals for the day:
-
--Have obstacles and what not to appear on the screen.  
-
-**Day 4**  Install the controls for the user to interact with the game.  Style the
-front end making it look polished and professional.  Goals for the day:
--Create controls for moving, game speed, and collisions
--Have a styled canvas and title
-
-###Bonus features
-
-- [ ] Add the turtles that you can jump on twice to make the shell that flies
-across the screen (like in real super mario)      
+    animation: function (data) {
+      if (self.direction === "right"){
+          self.sprite = self.spriteAnimations.standRight;
+      } else {
+        self.sprite = self.spriteAnimations.standLeft;
+      }
+    }
+  }
+};
+this.currentState = self.states.standing;
+this.direction ="right";
+this.velY = 0;
+this.velX = 3.8;
+this.coins = 0;
+this.x = x;
+this.y = y;
+this.w = w;
+this.h = h;
+},
+```

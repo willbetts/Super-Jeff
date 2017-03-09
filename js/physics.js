@@ -56,6 +56,7 @@ let Physics = {
         data.entities.score.value += 1;
 
         coinSound.play();
+
         coinsArray.splice(index, 1);
     }
 

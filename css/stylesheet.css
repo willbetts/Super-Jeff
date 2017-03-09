@@ -74,9 +74,40 @@ canvas {
 .link {
   color: white;
   text-decoration: none;
+  font-family: "PixelEmulator";
+  src: url("../font/pixel-emulator.otf");
+  margin-left: 20px;
+  margin-right: 20px;
 };
 
 .background {
   color: black;
+}
+
+#start-modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+  background: black;
+  z-index: 100;
+}
+
+#game-will-start {
+  font-family: "PixelEmulator";
+  src: url("../font/pixel-emulator.otf");
+  font-size: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 30%;
+  left: 15%;
+}
+
+.links {
+  position: fixed;
+  top: 90%;
+  left: 35%;
 
 }
