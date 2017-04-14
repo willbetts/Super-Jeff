@@ -12,27 +12,8 @@
 <body>
     <canvas id="bg-canvas" width="768" height="600"></canvas>
     <canvas id="fg-canvas" width="768" height="600"></canvas>
-      <script>
-      j = 10;
-      let modal = document.createElement('div');
-      modal.id = "start-modal";
-      document.body.append(modal);
-      function start() {
-        document.getElementById('start-modal').innerHTML = "<div id='game-will-start'>Collect as many coins before time runs out<br>Use the arrow keys to move around and jump <br/> Game will start in..." + `${j}</div>`;
-        j--;
-        if (j < 0) {
-          document.getElementById('start-modal').remove();
-          onTimer();
+    <script src="js/modal.js"></script>
 
-        }
-        else {
-          setTimeout(start, 1000);
-        }
-      }
-
-      start();
-
-      </script>
     </div>
     <div id="game">
       <script src="js/jquery.min.js"></script>
@@ -46,23 +27,7 @@
     </div>
     <div id="counter-container">
       <div id="my-counter"></div>
-      <script>
-      i = 60;
-      function onTimer() {
-        document.getElementById('my-counter').innerHTML = i;
-        i--;
-        if (i < 0) {
-              let modal = document.createElement('div');
-              modal.id = "modal";
-              modal.innerHTML = "<a class='link' href=> Game over. Click to play again</a>"
-              document.getElementById('fg-canvas').replaceWith(modal);
-        }
-        else {
-          setTimeout(onTimer, 1000);
-        }
-      }
-
-      </script>
+      <script src="js/timer.js"></script>
 
 
       <div id="start-over-link-container">
